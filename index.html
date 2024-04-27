@@ -3,31 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Document</title>
 </head>
 <body>
     <div class="main-container">
         <div class="calculator-display">12345678</div>
         <div class="calculator-keys">
-            <button class="calculator-key">Clear</button>
-            <button class="calculator-key">x<sup>2</sup></button>
-            <button class="calculator-key">&#8730;</button> square root
-            <button class="calculator-key">&#247;</sup></button>
+            <button class="calculator-key" id="clear-key"><strong>C</strong></button>
+            <button class="calculator-key operator-key">x<sup>2</sup></button>
+            <button class="calculator-key operator-key">&#8730;</button> <!-- square root -->
+            <button class="calculator-key operator-key">&#247;</sup></button> <!-- division -->
             <button class="calculator-key">7</button>
             <button class="calculator-key">8</button>
             <button class="calculator-key">9</button>
-            <button class="calculator-key">x</button>
+            <button class="calculator-key operator-key">x</button>
             <button class="calculator-key">4</button>
             <button class="calculator-key">5</button>
             <button class="calculator-key">6</button>
-            <button class="calculator-key">-</button>
+            <button class="calculator-key operator-key">-</button>
             <button class="calculator-key">1</button>
             <button class="calculator-key">2</button>
             <button class="calculator-key">3</button>
-            <button class="calculator-key">+</button>
+            <button class="calculator-key operator-key">+</button>
             <button class="calculator-key">0</button>
             <button class="calculator-key">.</button>
-            <button class="calculator-key">=</button>
+            <button class="calculator-key" id="equals-key"><strong>=</strong></button>
         </div>
     </div>
 </body>
