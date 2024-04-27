@@ -17,20 +17,20 @@ function divide(a, b) {
 // call one of calculation function based on operator
 function operate(a, b, operator) {
     switch (operator) {
-        case '+':
+        case "+":
             add(a, b);
             break;
-        case '-':
+        case "-":
             subtract(a, b);
             break;
-        case '*':
+        case "*":
             multiply(a, b);
             break;
-        case '/':
+        case "/":
             divide(a, b);
             break;    
         default:
-            alert ('Invalid choice')
+            alert ("Invalid choice");
             break;
     }
 }
