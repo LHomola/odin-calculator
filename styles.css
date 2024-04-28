@@ -14,6 +14,7 @@ body, h1, h2, h3, h4, h5, h6, p, ol, ul {
 }
 
 body {
+    background-color: #355e3b;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -22,43 +23,93 @@ body {
 }
 
 .main-container {
-    width: 20%;
-    height: 40%;
-    border: 1px solid red;
+    width: 370px;
+    height: 508px;
+    border: 2px solid rgb(17, 17, 17);
+    border-radius: 5px;
+    background-color: rgb(17, 17, 17);
 }
 
 .calculator-display {
-    font-size: 40px;
-    width: 100%;
+    background-color: rgb(17, 17, 17);
+    color: white;
+    font-size: 45px;
+    width: 99%;
     height: 2.5em;
     display: flex;
     justify-content: end;
     align-items: center;
-    padding: 0 10px;
-    border: 1px solid black;
+    padding-right: 10px;
+    border: 1px solid rgb(64,64,64);
+    border-radius: 5px;
+    margin: 2px auto;
 }
 
 .calculator-keys {
-    background-color: blueviolet;
+    background-color: rgb(17, 17, 17);
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    margin-top: 2px;
 }
 
 .calculator-key {
-    width: 25%;
-    height: 4em;
+    background-color: rgb(64,64,64);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bolder;
+    font-size: 1.2em;
+    width: 24.3%;
+    height: 3.9em;
+    margin-left: 0.12em;
+    margin-top: 0.12em;
+}
+
+.calculator-key:hover {
+    background-color: rgb(49, 49, 49);
+}
+
+.calculator-key:active {
+    background-color: rgb(32, 32, 32);
 }
 
 .operator-key {
-    background-color: orange;
+    background-color: rgb(255, 165, 0);
+    color: rgb(39, 39, 39);
+}
+
+.operator-key:hover {
+    background-color: rgb(185, 121, 0);
+}
+
+.operator-key:active {
+    background-color: rgb(148, 96, 0);
 }
 
 #clear-key {
     background-color: rgb(240,74,80);
+    color: rgb(39, 39, 39);
+}
+
+#clear-key:hover {
+    background-color: rgb(185, 55, 59);
+}
+
+#clear-key:active {
+    background-color: rgb(138, 43, 46);
 }
 
 #equals-key {
-    width: 50%;
+    width: 49%;
     background-color: rgb(109,180,66);
+    color: rgb(39, 39, 39);
+}
+
+#equals-key:hover {
+    background-color: rgb(83, 136, 50);
+}
+
+#equals-key:active {
+    background-color: rgb(55, 90, 34);
 }
