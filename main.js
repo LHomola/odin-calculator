@@ -39,6 +39,16 @@ function operate(a, b, operator) {
     }
 }
 
+function clearDisplay() {
+    const display = document.querySelector(".calculator-display");
+    display.textContent = "";
+}
+
+function attachEventListenersClear() {
+    const clearBtn = document.querySelector("#clear-key");
+    clearBtn.addEventListener("click", () => clearDisplay());
+}
+    
 function attachEventListenersNumbers() {
     const keys = document.querySelectorAll(".number-key");    
     const display = document.querySelector(".calculator-display");
@@ -54,3 +64,4 @@ function attachEventListenersNumbers() {
 }
 
 attachEventListenersNumbers();
+attachEventListenersClear();
