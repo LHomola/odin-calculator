@@ -1,3 +1,7 @@
+let firstNum = 0;
+let secondNum = 0;
+let operator = "";
+
 function add(a, b) {
     return a + b;
 }
@@ -34,3 +38,19 @@ function operate(a, b, operator) {
             break;
     }
 }
+
+function attachEventListenersNumbers() {
+    const keys = document.querySelectorAll(".number-key");    
+    const display = document.querySelector(".calculator-display");
+
+    keys.forEach(key => {
+        key.addEventListener("click", () => {
+            if (display.textContent.length < 15) {
+                firstNum = firstNum * 10 + parseInt(key.textContent);
+                display.textContent = firstNum;
+            }
+        })
+    });
+}
+
+attachEventListenersNumbers();
