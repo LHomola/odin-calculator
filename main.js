@@ -41,7 +41,7 @@ function operate(a, b, operator) {
 
 function clearDisplay() {
     const display = document.querySelector(".calculator-display");
-    display.textContent = "";
+    display.textContent = "0";
 }
 
 function attachEventListenersClear() {
