@@ -55,8 +55,7 @@ body {
 }
 
 .calculator-key {
-    background-color: rgb(64,64,64);
-    color: white;
+    background-color: rgb(64,64,64);    
     border: none;
     border-radius: 5px;
     font-weight: bolder;
@@ -67,11 +66,15 @@ body {
     margin-top: 0.12em;
 }
 
-.calculator-key:hover {
+.number-key {
+    color: white;
+}
+
+.number-key:hover {
     background-color: rgb(49, 49, 49);
 }
 
-.calculator-key:active {
+.number-key:active {
     background-color: rgb(32, 32, 32);
 }
 
