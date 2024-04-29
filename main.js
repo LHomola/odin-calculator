@@ -1,3 +1,5 @@
+const MAX_LEN = 14;
+
 let awaitingSecondNum = true;
 let firstNum = "";
 let operator = "";
@@ -16,7 +18,11 @@ function multiply() {
 }
 
 function divide() {
-    return parseFloat(firstNum) / parseFloat(secondNum);
+    if (secondNum !== "0") {
+        return parseFloat(firstNum) / parseFloat(secondNum)
+     } else {
+        return "From hero to zero!";
+     }
 }
 
 function squareRoot() {
@@ -36,7 +42,7 @@ function postOperationReset() {
 function operate() {    
     switch (operator) {
         case "+":            
-            firstNum = add();            
+            firstNum = add();
             break;
         case "-":
             firstNum = subtract();
@@ -55,6 +61,7 @@ function operate() {
             break;
     }
 
+    firstNum = Number(Number(firstNum).toPrecision(MAX_LEN));
     postOperationReset();
 }
 
@@ -90,7 +97,7 @@ function attachEventListenersNumbers() {
                 awaitingSecondNum = false;
             }
 
-            if (display.textContent.length < 15) {
+            if (display.textContent.length < MAX_LEN) {
                 display.textContent += key.textContent;
             }
         })
