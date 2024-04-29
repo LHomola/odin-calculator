@@ -1,5 +1,5 @@
-let firstNum = [];
-let secondNum = [];
+const firstNum = [];
+const secondNum = [];
 let operator = "";
 
 function add(a, b) {
@@ -42,6 +42,8 @@ function operate(a, b, operator) {
 function clearDisplay() {
     const display = document.querySelector(".calculator-display");
     display.textContent = "0";
+    firstNum.length = 0;
+    secondNum.length = 0;
 }
 
 function attachEventListenersClear() {
