@@ -1,37 +1,44 @@
 let firstNum = "";
-let secondNum = "";
+let newNumber = false;
 let operator = "";
+let secondNum = "";
 
-function add(a, b) {
-    return a + b;
+function add() {
+    return parseFloat(firstNum) + parseFloat(secondNum);
 }
 
-function subtract(a, b) {
-    return a - b;    
+function subtract() {
+    return parseFloat(firstNum) - parseFloat(secondNum);
 }
 
-function multiply(a, b) {
-    return a * b;
+function multiply() {
+    return parseFloat(firstNum) * parseFloat(secondNum);
 }
 
-function divide(a, b) {
-    return a / b;
+function divide() {
+    return parseFloat(firstNum) / parseFloat(secondNum);
 }
 
 // call one of calculation function based on operator
-function operate(a, b, operator) {
+function operate(operator) {
+    const display = document.querySelector(".calculator-display");            
+
     switch (operator) {
-        case "+":
-            add(a, b);
+        case "+":            
+            firstNum = add();
+            display.textContent = firstNum;    
             break;
         case "-":
-            subtract(a, b);
+            firstNum = subtract();
+            display.textContent = firstNum;    
             break;
-        case "*":
-            multiply(a, b);
+        case "x":
+            firstNum = multiply();
+            display.textContent = firstNum;    
             break;
-        case "/":
-            divide(a, b);
+        case "÷":
+            firstNum = divide();
+            display.textContent = firstNum;    
             break;    
         default:
             alert ("Invalid choice");
@@ -46,17 +53,22 @@ function clearDisplay() {
     secondNum = "";
 }
 
-function attachEventListenersClear() {
+function attachEventListenerClear() {
     const clearBtn = document.querySelector("#clear-key");
     clearBtn.addEventListener("click", () => clearDisplay());
 }
     
 function attachEventListenersNumbers() {
-    const keys = document.querySelectorAll(".number-key");    
+    const keys = document.querySelectorAll(".number-key");
     const display = document.querySelector(".calculator-display");
 
     keys.forEach(key => {
         key.addEventListener("click", () => {
+            if (newNumber) {
+                display.textContent = ""; // if last key pressed was an operator clear the display
+                newNumber = false;
+            }
+
             if (display.textContent.length < 15) {
                 display.textContent += key.textContent;
             }
@@ -68,16 +80,19 @@ function attachEventListenersOperators() {
     const keys = document.querySelectorAll(".operator-key");    
     const display = document.querySelector(".calculator-display");
 
+    // operator button clicked -> if first operation store displayed value else perform calculation and clear display
     keys.forEach(key => {
         key.addEventListener("click", () => {
-            firstNum = display.textContent;
-            console.log(firstNum);
+            firstNum === "" ? firstNum = display.textContent : secondNum = display.textContent;                       
+
+            if (secondNum !== "") operate(operator);
+            
+            newNumber = true;
             operator = key.textContent;
-            display.textContent = "";
         })
     });
 }
 
-attachEventListenersClear();
+attachEventListenerClear();
 attachEventListenersNumbers();
 attachEventListenersOperators();
