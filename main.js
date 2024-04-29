@@ -1,5 +1,5 @@
+let awaitingSecondNum = true;
 let firstNum = "";
-let newNumber = false;
 let operator = "";
 let secondNum = "";
 
@@ -23,52 +23,53 @@ function squareRoot() {
     return Math.sqrt(parseFloat(firstNum));
 }
 
-// call one of calculation function based on operator
-function operate(operator) {
+// once operation has been performed, update display and reset everything except firstNum
+function postOperationReset() {
     const display = document.querySelector(".calculator-display");            
 
+    display.textContent = firstNum;
+    operator = "";
+    secondNum = "";
+}
+
+// call one of calculation function based on operator
+function operate() {    
     switch (operator) {
         case "+":            
-            firstNum = add();
-            display.textContent = firstNum;
-            secondNum = "";
+            firstNum = add();            
             break;
         case "-":
             firstNum = subtract();
-            display.textContent = firstNum;
-            secondNum = "";
             break;
         case "x":
             firstNum = multiply();
-            display.textContent = firstNum;
-            secondNum = "";
             break;
         case "÷":
             firstNum = divide();
-            display.textContent = firstNum;
-            secondNum = "";
             break;
         case "√":
             firstNum = squareRoot();
-            display.textContent = firstNum;
-            secondNum = "";
             break;
         default:
             alert ("Invalid choice");
             break;
     }
+
+    postOperationReset();
 }
 
-function clearDisplay() {
+function fullReset() {
     const display = document.querySelector(".calculator-display");
+
     display.textContent = "";
     firstNum = "";
+    operator = "";
     secondNum = "";
 }
 
 function attachEventListenerClear() {
     const clearBtn = document.querySelector("#clear-key");
-    clearBtn.addEventListener("click", () => clearDisplay());
+    clearBtn.addEventListener("click", () => fullReset());
 }
     
 function attachEventListenersNumbers() {
@@ -77,9 +78,9 @@ function attachEventListenersNumbers() {
 
     keys.forEach(key => {
         key.addEventListener("click", () => {
-            if (newNumber) {
+            if (awaitingSecondNum) {
                 display.textContent = ""; // if last key pressed was an operator clear the display
-                newNumber = false;
+                awaitingSecondNum = false;
             }
 
             if (display.textContent.length < 15) {
@@ -96,21 +97,41 @@ function attachEventListenersOperators() {
     // operator button clicked -> if first operation store displayed value else perform calculation and clear display
     keys.forEach(key => {
         key.addEventListener("click", () => {
-            if (key.textContent === "√") {
+            if (key.textContent === "√") { // if square root, no need to wait for second number
                 firstNum = display.textContent
                 operator = key.textContent;                
-                operate(operator);
+                operate();
             } else {
-                firstNum === "" ? firstNum = display.textContent : secondNum = display.textContent;
-                if (secondNum !== "") operate(operator);
+                if (firstNum === "") { // if starting a whole new calculation
+                    firstNum = display.textContent;
+                } else if (!awaitingSecondNum) { // if first number, operator AND second number have been entereed calculate
+                    secondNum = display.textContent;
+                    operate();
+                }
                 
-                operator = key.textContent;
-                newNumber = true;
+                awaitingSecondNum = true;
+                operator = key.textContent;                
             }
         })
     });
 }
 
+function attachEventListenerEquals() {
+    const equalsBtn = document.querySelector("#equals-key");
+    const display = document.querySelector(".calculator-display");
+
+    equalsBtn.addEventListener("click", () => {
+        // if number and operator have been provided and current display content is a number -> calculate
+        if (firstNum !== "" && operator !== "" && !isNaN(display.textContent)) {
+            secondNum = display.textContent;
+            operate();
+            
+            awaitingSecondNum = true;
+        }
+    })
+}
+
 attachEventListenerClear();
+attachEventListenerEquals();
 attachEventListenersNumbers();
 attachEventListenersOperators();
