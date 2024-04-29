@@ -91,16 +91,16 @@ body {
     background-color: rgb(148, 96, 0);
 }
 
-#clear-key {
+#clear-key, #backspace-key {
     background-color: rgb(240,74,80);
     color: rgb(39, 39, 39);
 }
 
-#clear-key:hover {
+#clear-key:hover, #backspace-key:hover {
     background-color: rgb(185, 55, 59);
 }
 
-#clear-key:active {
+#clear-key:active, #backspace-key:active {
     background-color: rgb(138, 43, 46);
 }
 

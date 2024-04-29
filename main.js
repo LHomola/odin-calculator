@@ -71,6 +71,13 @@ function attachEventListenerClear() {
     const clearBtn = document.querySelector("#clear-key");
     clearBtn.addEventListener("click", () => fullReset());
 }
+
+function attachEventListenerBackspace() {
+    const backspaceBtn = document.querySelector("#backspace-key");
+    const display = document.querySelector(".calculator-display");    
+
+    backspaceBtn.addEventListener("click", () => display.textContent = display.textContent.slice(0, -1));
+}
     
 function attachEventListenersNumbers() {
     const keys = document.querySelectorAll(".number-key");
@@ -125,12 +132,13 @@ function attachEventListenerEquals() {
         if (firstNum !== "" && operator !== "" && !isNaN(display.textContent)) {
             secondNum = display.textContent;
             operate();
-            
+
             awaitingSecondNum = true;
         }
     })
 }
 
+attachEventListenerBackspace();
 attachEventListenerClear();
 attachEventListenerEquals();
 attachEventListenersNumbers();
