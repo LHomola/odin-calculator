@@ -19,6 +19,10 @@ function divide() {
     return parseFloat(firstNum) / parseFloat(secondNum);
 }
 
+function squareRoot() {
+    return Math.sqrt(parseFloat(firstNum));
+}
+
 // call one of calculation function based on operator
 function operate(operator) {
     const display = document.querySelector(".calculator-display");            
@@ -26,20 +30,29 @@ function operate(operator) {
     switch (operator) {
         case "+":            
             firstNum = add();
-            display.textContent = firstNum;    
+            display.textContent = firstNum;
+            secondNum = "";
             break;
         case "-":
             firstNum = subtract();
-            display.textContent = firstNum;    
+            display.textContent = firstNum;
+            secondNum = "";
             break;
         case "x":
             firstNum = multiply();
-            display.textContent = firstNum;    
+            display.textContent = firstNum;
+            secondNum = "";
             break;
         case "÷":
             firstNum = divide();
-            display.textContent = firstNum;    
-            break;    
+            display.textContent = firstNum;
+            secondNum = "";
+            break;
+        case "√":
+            firstNum = squareRoot();
+            display.textContent = firstNum;
+            secondNum = "";
+            break;
         default:
             alert ("Invalid choice");
             break;
@@ -83,12 +96,17 @@ function attachEventListenersOperators() {
     // operator button clicked -> if first operation store displayed value else perform calculation and clear display
     keys.forEach(key => {
         key.addEventListener("click", () => {
-            firstNum === "" ? firstNum = display.textContent : secondNum = display.textContent;                       
-
-            if (secondNum !== "") operate(operator);
-            
-            newNumber = true;
-            operator = key.textContent;
+            if (key.textContent === "√") {
+                firstNum = display.textContent
+                operator = key.textContent;                
+                operate(operator);
+            } else {
+                firstNum === "" ? firstNum = display.textContent : secondNum = display.textContent;
+                if (secondNum !== "") operate(operator);
+                
+                operator = key.textContent;
+                newNumber = true;
+            }
         })
     });
 }
