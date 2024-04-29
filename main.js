@@ -1,5 +1,5 @@
-const firstNum = [];
-const secondNum = [];
+let firstNum = "";
+let secondNum = "";
 let operator = "";
 
 function add(a, b) {
@@ -41,9 +41,9 @@ function operate(a, b, operator) {
 
 function clearDisplay() {
     const display = document.querySelector(".calculator-display");
-    display.textContent = "0";
-    firstNum.length = 0;
-    secondNum.length = 0;
+    display.textContent = "";
+    firstNum = "";
+    secondNum = "";
 }
 
 function attachEventListenersClear() {
@@ -58,13 +58,7 @@ function attachEventListenersNumbers() {
     keys.forEach(key => {
         key.addEventListener("click", () => {
             if (display.textContent.length < 15) {
-                if (operator.trim() === "") {
-                    firstNum.push(parseInt(key.textContent));
-                } else {
-                    secondNum.push(parseInt(key.textContent));
-                }
-
-                display.textContent = firstNum.join("");
+                display.textContent += key.textContent;
             }
         })
     });
@@ -76,8 +70,10 @@ function attachEventListenersOperators() {
 
     keys.forEach(key => {
         key.addEventListener("click", () => {
+            firstNum = display.textContent;
+            console.log(firstNum);
             operator = key.textContent;
-            display.textContent = operator;
+            display.textContent = "";
         })
     });
 }
