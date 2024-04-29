@@ -3,6 +3,7 @@ const MAX_LEN = 14;
 let awaitingSecondNum = true;
 let firstNum = "";
 let operator = "";
+let periodCount = 0;
 let secondNum = "";
 
 function add() {
@@ -35,6 +36,7 @@ function postOperationReset() {
 
     display.textContent = firstNum;
     operator = "";
+    periodCount = 0;
     secondNum = "";
 }
 
@@ -71,12 +73,8 @@ function fullReset() {
     display.textContent = "";
     firstNum = "";
     operator = "";
+    periodCount = 0;
     secondNum = "";
-}
-
-function attachEventListenerClear() {
-    const clearBtn = document.querySelector("#clear-key");
-    clearBtn.addEventListener("click", () => fullReset());
 }
 
 function attachEventListenerBackspace() {
@@ -85,10 +83,35 @@ function attachEventListenerBackspace() {
 
     backspaceBtn.addEventListener("click", () => display.textContent = display.textContent.slice(0, -1));
 }
+
+function attachEventListenerClear() {
+    const clearBtn = document.querySelector("#clear-key");
+    
+    clearBtn.addEventListener("click", () => fullReset());
+}
+
+function attachEventListenerPeriod() {
+    const display = document.querySelector(".calculator-display");
+    const key = document.querySelector("#period-key");    
+    
+    key.addEventListener("click", () => {
+        if (awaitingSecondNum || display.textContent === "") {
+            display.textContent = "0"; // if last key pressed was an operator prepend zero to display string
+            awaitingSecondNum = false;
+        }
+
+        console.log(periodCount);
+        if (display.textContent.length < MAX_LEN && periodCount < 1) {
+            console.log("test");
+            periodCount++;
+            display.textContent += key.textContent;
+        }
+    });
+}
     
 function attachEventListenersNumbers() {
-    const keys = document.querySelectorAll(".number-key");
     const display = document.querySelector(".calculator-display");
+    const keys = document.querySelectorAll(".number-key");    
 
     keys.forEach(key => {
         key.addEventListener("click", () => {
@@ -104,9 +127,9 @@ function attachEventListenersNumbers() {
     });
 }
 
-function attachEventListenersOperators() {
-    const keys = document.querySelectorAll(".operator-key");    
+function attachEventListenersOperators() {    
     const display = document.querySelector(".calculator-display");
+    const keys = document.querySelectorAll(".operator-key");
 
     // operator button clicked -> if first operation store displayed value else perform calculation and clear display
     keys.forEach(key => {
@@ -130,9 +153,9 @@ function attachEventListenersOperators() {
     });
 }
 
-function attachEventListenerEquals() {
-    const equalsBtn = document.querySelector("#equals-key");
+function attachEventListenerEquals() {    
     const display = document.querySelector(".calculator-display");
+    const equalsBtn = document.querySelector("#equals-key");
 
     equalsBtn.addEventListener("click", () => {
         // if number and operator have been provided and current display content is a number -> calculate
@@ -150,3 +173,4 @@ attachEventListenerClear();
 attachEventListenerEquals();
 attachEventListenersNumbers();
 attachEventListenersOperators();
+attachEventListenerPeriod();

@@ -66,15 +66,15 @@ body {
     margin-top: 0.12em;
 }
 
-.number-key {
+.number-key, #period-key {
     color: white;
 }
 
-.number-key:hover {
+.number-key:hover, #period-key:hover {
     background-color: rgb(49, 49, 49);
 }
 
-.number-key:active {
+.number-key:active, #period-key:active {
     background-color: rgb(32, 32, 32);
 }
 
