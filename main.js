@@ -3,7 +3,7 @@ const MAX_LEN = 14;
 let awaitingSecondNum = true;
 let firstNum = "";
 let operator = "";
-let periodCount = 0;
+let decimalCount = 0;
 let secondNum = "";
 
 function add() {
@@ -36,7 +36,7 @@ function postOperationReset() {
 
     display.textContent = firstNum;
     operator = "";
-    periodCount = 0;
+    decimalCount = 0;
     secondNum = "";
 }
 
@@ -73,7 +73,7 @@ function fullReset() {
     display.textContent = "";
     firstNum = "";
     operator = "";
-    periodCount = 0;
+    decimalCount = 0;
     secondNum = "";
 }
 
@@ -90,9 +90,9 @@ function attachEventListenerClear() {
     clearBtn.addEventListener("click", () => fullReset());
 }
 
-function attachEventListenerPeriod() {
+function attachEventListenerDecimal() {
     const display = document.querySelector(".calculator-display");
-    const key = document.querySelector("#period-key");    
+    const key = document.querySelector("#decimal-key");    
     
     key.addEventListener("click", () => {
         if (awaitingSecondNum || display.textContent === "") {
@@ -100,30 +100,12 @@ function attachEventListenerPeriod() {
             awaitingSecondNum = false;
         }
 
-        console.log(periodCount);
-        if (display.textContent.length < MAX_LEN && periodCount < 1) {
+        console.log(decimalCount);
+        if (display.textContent.length < MAX_LEN && decimalCount < 1) {
             console.log("test");
-            periodCount++;
+            decimalCount++;
             display.textContent += key.textContent;
         }
-    });
-}
-    
-function attachEventListenersNumbers() {
-    const display = document.querySelector(".calculator-display");
-    const keys = document.querySelectorAll(".number-key");    
-
-    keys.forEach(key => {
-        key.addEventListener("click", () => {
-            if (awaitingSecondNum) {
-                display.textContent = ""; // if last key pressed was an operator clear the display
-                awaitingSecondNum = false;
-            }
-
-            if (display.textContent.length < MAX_LEN) {
-                display.textContent += key.textContent;
-            }
-        })
     });
 }
 
@@ -168,9 +150,43 @@ function attachEventListenerEquals() {
     })
 }
 
+function numberEventReaction(key) {    
+    const display = document.querySelector(".calculator-display");
+
+    if (awaitingSecondNum) {
+        display.textContent = ""; // if last key pressed was an operator clear the display
+        awaitingSecondNum = false;
+    }
+
+    if (display.textContent.length < MAX_LEN) {
+        display.textContent += key;
+    }
+}
+
+function attachEventListenersNumbers() {    
+    const keys = document.querySelectorAll(".number-key");    
+
+    keys.forEach(key => {
+        key.addEventListener("click", () => {            
+            numberEventReaction(parseInt(key.textContent));
+        })
+    });
+}
+
+function attachKeyboardEventListenersNumbers() {
+    const display = document.querySelector(".calculator-display");
+
+    window.addEventListener("keydown", (e) => {
+        const key = e.key;
+        if (["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(key)) numberEventReaction(key);    
+    });
+}
+
 attachEventListenerBackspace();
 attachEventListenerClear();
 attachEventListenerEquals();
 attachEventListenersNumbers();
 attachEventListenersOperators();
-attachEventListenerPeriod();
+attachEventListenerDecimal();
+
+attachKeyboardEventListenersNumbers();
