@@ -98,11 +98,13 @@ function attachMouseEventListenerClear() {
 function decimalEventReaction() {
     const display = document.querySelector(".calculator-display");
     
+    // if last key pressed was an operator and no digit has been entered yet, prepend "0"
     if (awaitingSecondNum || display.textContent === "") {
-        display.textContent = "0"; // if last key pressed was an operator prepend zero to display string
+        display.textContent = "0";
         awaitingSecondNum = false;
     };
 
+    // if number on display doesn't already contain a decimal and is shorter than max length
     if (display.textContent.length < MAX_LEN && decimalCount < 1) {
         decimalCount++;
         display.textContent += ".";
@@ -176,12 +178,12 @@ function numberEventReaction(key) {
 function attachMouseEventListenersNumbers() {    
     const keys = document.querySelectorAll(".number-key");    
 
-    keys.forEach(key => {
+    keys.forEach(key => {attachMouseEvent
         key.addEventListener("click", () => numberEventReaction(parseInt(key.textContent)));
     });
 }
 
-function attachKeyboardEventListenersNumbers() {
+function attachKeyboardEventListeners() {
     window.addEventListener("keydown", (e) => {
         const key = e.key;
 
@@ -221,4 +223,4 @@ attachMouseEventListenersNumbers();
 attachMouseEventListenersOperators();
 attachMouseEventListenerDecimal();
 
-attachKeyboardEventListenersNumbers();
+attachKeyboardEventListeners();

@@ -15,7 +15,7 @@ body, h1, h2, h3, h4, h5, h6, p, ol, ul {
 }
 
 body {
-    background-color: #355e3b;
+    background-color: rgb(16,59,23);
     height: 100vh;
     display: flex;
     flex-direction: column;
