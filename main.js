@@ -49,10 +49,12 @@ function operate() {
         case "-":
             firstNum = subtract();
             break;
-        case "x":
+        case "x" :
+        case "*" :
             firstNum = multiply();
             break;
         case "÷":
+        case "/":
             firstNum = divide();
             break;
         case "√":
@@ -100,9 +102,7 @@ function attachEventListenerDecimal() {
             awaitingSecondNum = false;
         }
 
-        console.log(decimalCount);
         if (display.textContent.length < MAX_LEN && decimalCount < 1) {
-            console.log("test");
             decimalCount++;
             display.textContent += key.textContent;
         }
@@ -178,8 +178,33 @@ function attachKeyboardEventListenersNumbers() {
 
     window.addEventListener("keydown", (e) => {
         const key = e.key;
-        if (["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(key)) numberEventReaction(key);
 
+        // numbers
+        if (["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(key)) numberEventReaction(key);
+        
+        // operators
+        if (["+", "-", "*", "/"].includes(key)) {
+            e.preventDefault(); // "/" triggers search function in firefox -> prevent this behaviour
+            
+            // square root
+            if (e.shiftKey && key === "/") {
+                firstNum = display.textContent
+                operator = "√";
+                operate();
+            } else {
+                if (firstNum === "") { // if starting a whole new calculation
+                    firstNum = display.textContent;
+                } else if (!awaitingSecondNum) { // if first number, operator AND second number have been entereed calculate
+                    secondNum = display.textContent;
+                    operate();
+                }
+                
+                awaitingSecondNum = true;
+                operator = key;
+            }
+        };
+
+        // functional keys
         switch (key) {
             case "Escape":
                 fullReset();
