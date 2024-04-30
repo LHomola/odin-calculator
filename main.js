@@ -79,14 +79,14 @@ function fullReset() {
     secondNum = "";
 }
 
-function backspaceReaction() {
+function backspaceEventReaction() {
     const display = document.querySelector(".calculator-display");    
     display.textContent = display.textContent.slice(0, -1);
 }
 
 function attachEventListenerBackspace() {
     const backspaceBtn = document.querySelector("#backspace-key");    
-    backspaceBtn.addEventListener("click", () => backspaceReaction());
+    backspaceBtn.addEventListener("click", () => backspaceEventReaction());
 }
 
 function attachEventListenerClear() {
@@ -138,19 +138,21 @@ function attachEventListenersOperators() {
     });
 }
 
-function attachEventListenerEquals() {    
+function equalsEventReaction() {    
     const display = document.querySelector(".calculator-display");
+
+    // if number and operator have been provided and current display content is a number -> calculate
+    if (firstNum !== "" && operator !== "" && !isNaN(display.textContent)) {
+        secondNum = display.textContent;
+        operate();
+
+        awaitingSecondNum = true;
+    }
+}
+
+function attachEventListenerEquals() {    
     const equalsBtn = document.querySelector("#equals-key");
-
-    equalsBtn.addEventListener("click", () => {
-        // if number and operator have been provided and current display content is a number -> calculate
-        if (firstNum !== "" && operator !== "" && !isNaN(display.textContent)) {
-            secondNum = display.textContent;
-            operate();
-
-            awaitingSecondNum = true;
-        }
-    })
+    equalsBtn.addEventListener("click", () => equalsEventReaction());
 }
 
 function numberEventReaction(key) {    
@@ -212,16 +214,10 @@ function attachKeyboardEventListenersNumbers() {
                 fullReset();
                 break;        
             case "Backspace":
-                backspaceReaction();
+                backspaceEventReaction();
                 break;
             case "Enter":
-                // if number and operator have been provided and current display content is a number -> calculate
-                if (firstNum !== "" && operator !== "" && !isNaN(display.textContent)) {
-                    secondNum = display.textContent;
-                    operate();
-
-                    awaitingSecondNum = true;
-                }
+                equalsEventReaction();
                 break;
             case ".":
                 if (awaitingSecondNum || display.textContent === "") {
