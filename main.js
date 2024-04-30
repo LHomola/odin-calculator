@@ -97,13 +97,15 @@ function attachEventListenerClear() {
 
 function decimalEventReaction() {
     const display = document.querySelector(".calculator-display");
-
+    
     if (awaitingSecondNum || display.textContent === "") {
+        console.log("test1");
         display.textContent = "0"; // if last key pressed was an operator prepend zero to display string
         awaitingSecondNum = false;
     };
 
     if (display.textContent.length < MAX_LEN && decimalCount < 1) {
+        console.log("test2");
         decimalCount++;
         display.textContent += ".";
     };
@@ -134,7 +136,8 @@ function attachEventListenersOperators() {
                 }
                 
                 awaitingSecondNum = true;
-                operator = key.textContent;                
+                operator = key.textContent;
+                decimalCount = 0;
             }
         })
     });
@@ -207,6 +210,7 @@ function attachKeyboardEventListenersNumbers() {
                 
                 awaitingSecondNum = true;
                 operator = key;
+                decimalCount = 0;
             }
         };
         
