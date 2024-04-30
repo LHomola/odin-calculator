@@ -185,13 +185,12 @@ function attachKeyboardEventListenersNumbers() {
         // operators
         if (["+", "-", "*", "/"].includes(key)) {
             e.preventDefault(); // "/" triggers search function in firefox -> prevent this behaviour
-            
-            // square root
-            if (e.shiftKey && key === "/") {
+                        
+            if (e.shiftKey && key === "/") { // square root
                 firstNum = display.textContent
                 operator = "√";
                 operate();
-            } else {
+            } else { // other operators
                 if (firstNum === "") { // if starting a whole new calculation
                     firstNum = display.textContent;
                 } else if (!awaitingSecondNum) { // if first number, operator AND second number have been entereed calculate
@@ -221,6 +220,16 @@ function attachKeyboardEventListenersNumbers() {
                     awaitingSecondNum = true;
                 }
                 break;
+            case ".":
+                if (awaitingSecondNum || display.textContent === "") {
+                    display.textContent = "0"; // if last key pressed was an operator prepend zero to display string
+                    awaitingSecondNum = false;
+                }
+        
+                if (display.textContent.length < MAX_LEN && decimalCount < 1) {
+                    decimalCount++;
+                    display.textContent += key;
+                }
             default:
                 break;
         }        
