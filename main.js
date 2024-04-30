@@ -81,7 +81,7 @@ function fullReset() {
 
 function backspaceEventReaction() {
     const display = document.querySelector(".calculator-display");    
-    display.textContent = display.textContent.slice(0, -1);
+    if (!(awaitingSecondNum && operator === "")) display.textContent = display.textContent.slice(0, -1);
 }
 
 function attachMouseEventListenerBackspace() {
@@ -90,8 +90,7 @@ function attachMouseEventListenerBackspace() {
 }
 
 function attachMouseEventListenerClear() {
-    const clearBtn = document.querySelector("#clear-key");
-    
+    const clearBtn = document.querySelector("#clear-key");    
     clearBtn.addEventListener("click", () => fullReset());
 }
 
@@ -124,9 +123,9 @@ function operatorEventReaction(e, key) {
         operator = "√";
         operate();
     } else { // other operators
-        if (firstNum === "") { // if starting a whole new calculation
+        if (firstNum === "") { // if starting new calculation from scratch
             firstNum = display.textContent;
-        } else if (!awaitingSecondNum) { // if first number, operator AND second number have been entereed calculate
+        } else if (!awaitingSecondNum) { // if first number, operator AND second number have been entered calculate
             secondNum = display.textContent;
             operate();
         }
