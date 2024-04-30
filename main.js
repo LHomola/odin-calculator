@@ -79,11 +79,14 @@ function fullReset() {
     secondNum = "";
 }
 
-function attachEventListenerBackspace() {
-    const backspaceBtn = document.querySelector("#backspace-key");
+function backspaceReaction() {
     const display = document.querySelector(".calculator-display");    
+    display.textContent = display.textContent.slice(0, -1);
+}
 
-    backspaceBtn.addEventListener("click", () => display.textContent = display.textContent.slice(0, -1));
+function attachEventListenerBackspace() {
+    const backspaceBtn = document.querySelector("#backspace-key");    
+    backspaceBtn.addEventListener("click", () => backspaceReaction());
 }
 
 function attachEventListenerClear() {
@@ -209,7 +212,7 @@ function attachKeyboardEventListenersNumbers() {
                 fullReset();
                 break;        
             case "Backspace":
-                display.textContent = display.textContent.slice(0, -1);
+                backspaceReaction();
                 break;
             case "Enter":
                 // if number and operator have been provided and current display content is a number -> calculate
