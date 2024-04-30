@@ -99,13 +99,11 @@ function decimalEventReaction() {
     const display = document.querySelector(".calculator-display");
     
     if (awaitingSecondNum || display.textContent === "") {
-        console.log("test1");
         display.textContent = "0"; // if last key pressed was an operator prepend zero to display string
         awaitingSecondNum = false;
     };
 
     if (display.textContent.length < MAX_LEN && decimalCount < 1) {
-        console.log("test2");
         decimalCount++;
         display.textContent += ".";
     };
@@ -116,30 +114,32 @@ function attachEventListenerDecimal() {
     key.addEventListener("click", () => decimalEventReaction());
 }
 
-function attachEventListenersOperators() {    
+function operatorEventReaction(e, key) {    
     const display = document.querySelector(".calculator-display");
+    
+    if ((e.shiftKey && key === "/") || (key === "√")) { // if square root, no need to wait for second number
+        firstNum = display.textContent
+        operator = key;
+        operate();
+    } else { // other operators
+        if (firstNum === "") { // if starting a whole new calculation
+            firstNum = display.textContent;
+        } else if (!awaitingSecondNum) { // if first number, operator AND second number have been entereed calculate
+            secondNum = display.textContent;
+            operate();
+        }
+        
+        awaitingSecondNum = true;
+        operator = key;
+        decimalCount = 0;
+    };            
+}
+
+function attachEventListenersOperators() {    
     const keys = document.querySelectorAll(".operator-key");
 
-    // operator button clicked -> if first operation store displayed value else perform calculation and clear display
     keys.forEach(key => {
-        key.addEventListener("click", () => {
-            if (key.textContent === "√") { // if square root, no need to wait for second number
-                firstNum = display.textContent
-                operator = key.textContent;                
-                operate();
-            } else {
-                if (firstNum === "") { // if starting a whole new calculation
-                    firstNum = display.textContent;
-                } else if (!awaitingSecondNum) { // if first number, operator AND second number have been entereed calculate
-                    secondNum = display.textContent;
-                    operate();
-                }
-                
-                awaitingSecondNum = true;
-                operator = key.textContent;
-                decimalCount = 0;
-            }
-        })
+        key.addEventListener("click", (e) => operatorEventReaction(e, key.textContent));
     });
 }
 
@@ -177,15 +177,11 @@ function attachEventListenersNumbers() {
     const keys = document.querySelectorAll(".number-key");    
 
     keys.forEach(key => {
-        key.addEventListener("click", () => {            
-            numberEventReaction(parseInt(key.textContent));
-        })
+        key.addEventListener("click", () => numberEventReaction(parseInt(key.textContent)));
     });
 }
 
 function attachKeyboardEventListenersNumbers() {
-    const display = document.querySelector(".calculator-display");
-
     window.addEventListener("keydown", (e) => {
         const key = e.key;
 
@@ -194,24 +190,8 @@ function attachKeyboardEventListenersNumbers() {
         
         // operators
         if (["+", "-", "*", "/"].includes(key)) {
-            e.preventDefault(); // "/" triggers search function in firefox -> prevent this behaviour
-                        
-            if (e.shiftKey && key === "/") { // square root
-                firstNum = display.textContent
-                operator = "√";
-                operate();
-            } else { // other operators
-                if (firstNum === "") { // if starting a whole new calculation
-                    firstNum = display.textContent;
-                } else if (!awaitingSecondNum) { // if first number, operator AND second number have been entereed calculate
-                    secondNum = display.textContent;
-                    operate();
-                }
-                
-                awaitingSecondNum = true;
-                operator = key;
-                decimalCount = 0;
-            }
+            e.preventDefault(); // "/" triggers search function in firefox -> prevent this behaviour                        
+            operatorEventReaction(e, key);
         };
         
         // functional keys
