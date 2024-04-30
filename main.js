@@ -178,7 +178,27 @@ function attachKeyboardEventListenersNumbers() {
 
     window.addEventListener("keydown", (e) => {
         const key = e.key;
-        if (["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(key)) numberEventReaction(key);    
+        if (["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(key)) numberEventReaction(key);
+
+        switch (key) {
+            case "Escape":
+                fullReset();
+                break;        
+            case "Backspace":
+                display.textContent = display.textContent.slice(0, -1);
+                break;
+            case "Enter":
+                // if number and operator have been provided and current display content is a number -> calculate
+                if (firstNum !== "" && operator !== "" && !isNaN(display.textContent)) {
+                    secondNum = display.textContent;
+                    operate();
+
+                    awaitingSecondNum = true;
+                }
+                break;
+            default:
+                break;
+        }        
     });
 }
 
