@@ -95,21 +95,23 @@ function attachEventListenerClear() {
     clearBtn.addEventListener("click", () => fullReset());
 }
 
-function attachEventListenerDecimal() {
+function decimalEventReaction() {
     const display = document.querySelector(".calculator-display");
-    const key = document.querySelector("#decimal-key");    
-    
-    key.addEventListener("click", () => {
-        if (awaitingSecondNum || display.textContent === "") {
-            display.textContent = "0"; // if last key pressed was an operator prepend zero to display string
-            awaitingSecondNum = false;
-        }
 
-        if (display.textContent.length < MAX_LEN && decimalCount < 1) {
-            decimalCount++;
-            display.textContent += key.textContent;
-        }
-    });
+    if (awaitingSecondNum || display.textContent === "") {
+        display.textContent = "0"; // if last key pressed was an operator prepend zero to display string
+        awaitingSecondNum = false;
+    };
+
+    if (display.textContent.length < MAX_LEN && decimalCount < 1) {
+        decimalCount++;
+        display.textContent += ".";
+    };
+}
+
+function attachEventListenerDecimal() {
+    const key = document.querySelector("#decimal-key");
+    key.addEventListener("click", () => decimalEventReaction());
 }
 
 function attachEventListenersOperators() {    
@@ -207,7 +209,7 @@ function attachKeyboardEventListenersNumbers() {
                 operator = key;
             }
         };
-
+        
         // functional keys
         switch (key) {
             case "Escape":
@@ -220,15 +222,8 @@ function attachKeyboardEventListenersNumbers() {
                 equalsEventReaction();
                 break;
             case ".":
-                if (awaitingSecondNum || display.textContent === "") {
-                    display.textContent = "0"; // if last key pressed was an operator prepend zero to display string
-                    awaitingSecondNum = false;
-                }
-        
-                if (display.textContent.length < MAX_LEN && decimalCount < 1) {
-                    decimalCount++;
-                    display.textContent += key;
-                }
+                decimalEventReaction();
+                break;
             default:
                 break;
         }        
