@@ -1,4 +1,4 @@
-const MAX_LEN = 14;
+const MAX_LEN = 15;
 
 let awaitingSecondNum = true;
 let firstNum = "";
@@ -65,7 +65,7 @@ function operate() {
             break;
     }
 
-    firstNum = Number(Number(firstNum).toPrecision(MAX_LEN));
+    firstNum = Number(Number(firstNum).toPrecision(MAX_LEN-1));
     postOperationReset();
 }
 
@@ -118,10 +118,10 @@ function attachMouseEventListenerDecimal() {
 
 function operatorEventReaction(e, key) {    
     const display = document.querySelector(".calculator-display");
-    
-    if ((e.shiftKey && key === "/") || (key === "√")) { // if square root, no need to wait for second number
+        
+    if ((e.shiftKey && key === "/") || (key === "√")) { // if square root, no need to wait for second number        
         firstNum = display.textContent
-        operator = key;
+        operator = "√";
         operate();
     } else { // other operators
         if (firstNum === "") { // if starting a whole new calculation
@@ -178,12 +178,12 @@ function numberEventReaction(key) {
 function attachMouseEventListenersNumbers() {    
     const keys = document.querySelectorAll(".number-key");    
 
-    keys.forEach(key => {attachMouseEvent
+    keys.forEach(key => {
         key.addEventListener("click", () => numberEventReaction(parseInt(key.textContent)));
     });
 }
 
-function attachKeyboardEventListeners() {
+function attachKeyboardEventListenersNumbers() {
     window.addEventListener("keydown", (e) => {
         const key = e.key;
 
@@ -223,4 +223,4 @@ attachMouseEventListenersNumbers();
 attachMouseEventListenersOperators();
 attachMouseEventListenerDecimal();
 
-attachKeyboardEventListeners();
+attachKeyboardEventListenersNumbers();

@@ -80,7 +80,7 @@ body {
 
 .operator-key {
     background-color: rgb(255, 165, 0);
-    color: rgb(39, 39, 39);
+    color: black;
 }
 
 .operator-key:hover {
@@ -92,8 +92,8 @@ body {
 }
 
 #clear-key, #backspace-key {
-    background-color: rgb(240,74,80);
-    color: rgb(39, 39, 39);
+    background-color: rgb(165,0,0);
+    color: black;
 }
 
 #clear-key:hover, #backspace-key:hover {
@@ -106,8 +106,8 @@ body {
 
 #equals-key {
     width: 49%;
-    background-color: rgb(109,180,66);
-    color: rgb(39, 39, 39);
+    background-color: rgb(75,149,31);
+    color: black
 }
 
 #equals-key:hover {
