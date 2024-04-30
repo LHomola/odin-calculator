@@ -22,7 +22,7 @@ function divide() {
     if (secondNum !== "0") {
         return parseFloat(firstNum) / parseFloat(secondNum)
      } else {
-        return "From hero to zero!";
+        return "From hero to zero!"; // division by zero message to user
      }
 }
 
@@ -40,7 +40,7 @@ function postOperationReset() {
     secondNum = "";
 }
 
-// call one of calculation function based on operator
+// call one of calculation functions based on operator
 function operate() {    
     switch (operator) {
         case "+":            
@@ -84,12 +84,12 @@ function backspaceEventReaction() {
     display.textContent = display.textContent.slice(0, -1);
 }
 
-function attachEventListenerBackspace() {
+function attachMouseEventListenerBackspace() {
     const backspaceBtn = document.querySelector("#backspace-key");    
     backspaceBtn.addEventListener("click", () => backspaceEventReaction());
 }
 
-function attachEventListenerClear() {
+function attachMouseEventListenerClear() {
     const clearBtn = document.querySelector("#clear-key");
     
     clearBtn.addEventListener("click", () => fullReset());
@@ -109,7 +109,7 @@ function decimalEventReaction() {
     };
 }
 
-function attachEventListenerDecimal() {
+function attachMouseEventListenerDecimal() {
     const key = document.querySelector("#decimal-key");
     key.addEventListener("click", () => decimalEventReaction());
 }
@@ -135,7 +135,7 @@ function operatorEventReaction(e, key) {
     };            
 }
 
-function attachEventListenersOperators() {    
+function attachMouseEventListenersOperators() {    
     const keys = document.querySelectorAll(".operator-key");
 
     keys.forEach(key => {
@@ -155,7 +155,7 @@ function equalsEventReaction() {
     }
 }
 
-function attachEventListenerEquals() {    
+function attachMouseEventListenerEquals() {    
     const equalsBtn = document.querySelector("#equals-key");
     equalsBtn.addEventListener("click", () => equalsEventReaction());
 }
@@ -173,7 +173,7 @@ function numberEventReaction(key) {
     }
 }
 
-function attachEventListenersNumbers() {    
+function attachMouseEventListenersNumbers() {    
     const keys = document.querySelectorAll(".number-key");    
 
     keys.forEach(key => {
@@ -214,11 +214,11 @@ function attachKeyboardEventListenersNumbers() {
     });
 }
 
-attachEventListenerBackspace();
-attachEventListenerClear();
-attachEventListenerEquals();
-attachEventListenersNumbers();
-attachEventListenersOperators();
-attachEventListenerDecimal();
+attachMouseEventListenerBackspace();
+attachMouseEventListenerClear();
+attachMouseEventListenerEquals();
+attachMouseEventListenersNumbers();
+attachMouseEventListenersOperators();
+attachMouseEventListenerDecimal();
 
 attachKeyboardEventListenersNumbers();
